@@ -138,17 +138,20 @@ const getCategorySummary = async (req, res) => {
             {
                 $group: {
                     _id: "$category",
-                    totalProducts: { $sum: 1 },
+                    totalItems: { $sum: 1 },
                     totalQuantity: { $sum: "$quantity" },
                     totalStockValue: {
                         $sum: { $multiply: ["$price", "$quantity"] }
-                    }
+                    },
+                    avgPrice: { $avg: "$price" }
                 }
             }
         ]);
 
-        res.status(200).json(summary);
-
+        res.status(200).json({
+            categories: summary.length,
+            summary
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

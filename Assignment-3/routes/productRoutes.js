@@ -11,16 +11,14 @@ const {
   deleteProduct,
   getLowStock,
   getCategorySummary,
-  restockProduct,
-  sellProduct,
+  adjustStock,          
 } = require("../controllers/productController");
 
 router.post("/", validateProduct, createProduct);
 router.get("/", getProducts);
 router.get("/low-stock", getLowStock);
-router.get("/category-summary", getCategorySummary);
-router.patch("/:id/restock", restockProduct);
-router.patch("/:id/sell", sellProduct);
+router.get("/summary", getCategorySummary);     
+router.patch("/:id/stock", adjustStock);        
 router.get("/:id", getProductById);
 router.put("/:id", validateProduct, updateProduct);
 router.delete("/:id", deleteProduct);
